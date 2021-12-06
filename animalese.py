@@ -1,9 +1,23 @@
 import random
+import sys
 from pydub import AudioSegment
 from pydub.playback import play
 
 stringy = 'The quick brown fox jumps over the lazy dog.'
 pitch = 'med' # choose between 'high', 'med', 'low', or 'lowest'
+
+if("--text" in  sys.argv):
+    stringy = sys.argv[sys.argv.index("--text") + 1]        
+
+if("--pitch" in  sys.argv):
+    pitch = sys.argv[sys.argv.index("--pitch") + 1]        
+
+if ("--help" in sys.argv):
+	print("--text <string>, --pitch <'high', 'med', 'low', or 'lowest'>, --help <shows the list of available commands>")
+	sys.exit()
+
+print("Text: " + stringy)
+print("Pitch: " + pitch)
 
 stringy = stringy.lower()
 sounds = {}
@@ -45,7 +59,7 @@ for i, char in enumerate(stringy):
 
 combined_sounds = None
 
-print(len(infiles))
+print("Length: " + str(len(infiles)))
 for index,sound in enumerate(infiles):
 	tempsound = AudioSegment.from_wav(sound)
 	if stringy[len(stringy)-1] == '?':
